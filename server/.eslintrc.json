@@ -1,0 +1,18 @@
+//ESLint в клиентской и серверной части:
+
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "prettier/prettier": ["error"],
+    "no-console": "off",
+    "no-unused-vars": "warn"
+  }
+} 

@@ -1,0 +1,26 @@
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    color: white;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.logo__icon {
+    font-size: 1.4rem;
+}
+
+.logo__text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.5px;
+}

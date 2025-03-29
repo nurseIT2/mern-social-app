@@ -1,0 +1,16 @@
+.auth-form {
+    width: 90%;
+    margin: auto;
+    padding: 1rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: var(--card-background);
+    box-shadow: 0 2px 8px var(--shadow-color);
+  }
+  
+  @media (min-width: 768px) {
+    .auth-form {
+      width: 40rem;
+    }
+  }
+  
