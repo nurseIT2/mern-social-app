@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# Проверка формата сообщения коммита с помощью commitlint
-npx --no-install commitlint --edit $1 
+# Проверка формата коммит-сообщения
+npx --no -- commitlint --edit ${1} 

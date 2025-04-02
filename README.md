@@ -11,13 +11,13 @@
 
 ## Порты
 
-- Frontend (React): 
+- Frontend (React):
   - Host: 3000
   - Container: 3000
-- Backend (Express): 
+- Backend (Express):
   - Host: 8080
   - Container: 8080
-- MongoDB: 
+- MongoDB:
   - Host: 27017
   - Container: 27017
 
@@ -30,27 +30,32 @@
 ### Шаги для запуска
 
 1. Клонируйте репозиторий:
+
 ```bash
 git clone <url-репозитория>
 cd <имя-репозитория>
 ```
 
 2. Запустите контейнеры с помощью Docker Compose:
+
 ```bash
 docker compose up
 ```
 
 Для запуска в фоновом режиме:
+
 ```bash
 docker compose up -d
 ```
 
 3. Для остановки контейнеров:
+
 ```bash
 docker compose down
 ```
 
 4. Для просмотра логов:
+
 ```bash
 docker compose logs -f
 ```
@@ -108,7 +113,7 @@ npm install
 
 ### Как это работает
 
-- При попытке коммита изменений автоматически запускаются линтеры и форматтеры
+- При попытке коммита автоматически запускаются линтеры и форматтеры
 - Коммит будет отклонен, если есть ошибки в коде или неправильный формат коммит-сообщения
 - Сообщения коммитов должны соответствовать [Conventional Commits](https://www.conventionalcommits.org/)
 
@@ -118,35 +123,35 @@ npm install
 
 ## Project Background
 
-**Nodester** is a very simple Twitter-like single page app built with the MERN stack. This project delves deeper into NodeJS and the organization of the back end server work flow.  
+**Nodester** is a very simple Twitter-like single page app built with the MERN stack. This project delves deeper into NodeJS and the organization of the back end server work flow.
 
 ## Benefits of Project
 
-Nodester helps to improve your server side in general with the use of NodeJS and its various libraries.  It use an MVC framework to organize the routes, RESTful APIs, and models, so you can easily understand where relevant code is quicker when updating, installing a new feature, or troubleshooting.  
+Nodester helps to improve your server side in general with the use of NodeJS and its various libraries. It use an MVC framework to organize the routes, RESTful APIs, and models, so you can easily understand where relevant code is quicker when updating, installing a new feature, or troubleshooting.
 
 ## Objectives for this project
 
-* Learn more advanced skills in server side development with the use of NodeJS
+- Learn more advanced skills in server side development with the use of NodeJS
 
-* Use Epxress JS web framework to write cleaner simpler code for server creation
+- Use Epxress JS web framework to write cleaner simpler code for server creation
 
-* Better understand the MVC pattern of organization for server side code
+- Better understand the MVC pattern of organization for server side code
 
-* Write more advanced RESTful APIs with NodeJS and the Express web framework to serve data to the React front end
+- Write more advanced RESTful APIs with NodeJS and the Express web framework to serve data to the React front end
 
-* Get an introduction to NoSQL databases with the use of mongoDB and the mongoose library
+- Get an introduction to NoSQL databases with the use of mongoDB and the mongoose library
 
-* Implement more advance authentication with encryption and tokens
+- Implement more advance authentication with encryption and tokens
 
-* Better understand server side validation and error handling
+- Better understand server side validation and error handling
 
 ## Outcome
 
-Nodester is a well designed MERN stack project that helps you learn more advanced skills in NodeJS and server development in general.  You will be able to advance your skills in MVC, RESTful APIs, Authentication, server side error handling, NoSQL database, mongoDB, mongoose, and more.  
+Nodester is a well designed MERN stack project that helps you learn more advanced skills in NodeJS and server development in general. You will be able to advance your skills in MVC, RESTful APIs, Authentication, server side error handling, NoSQL database, mongoDB, mongoose, and more.
 
 ## Assumptions
 
-This project assumes that you have a working knowledge of HTML, CSS, Javascript, and NodeJS.  Docs for each library and framework used are linked below 
+This project assumes that you have a working knowledge of HTML, CSS, Javascript, and NodeJS. Docs for each library and framework used are linked below
 
 ## Project Links
 
@@ -164,10 +169,9 @@ React JS docs: https://reactjs.org/docs/getting-started.html
 
 ## Project Start Commands
 
-Client start in client folder: ```npm start``` 
+Client start in client folder: `npm start`
 
-Server start in server folder: ```node app.js```
-
+Server start in server folder: `node app.js`
 
 ## Application Screenshots
 
@@ -200,6 +204,7 @@ docker compose down
 ```
 
 Приложение будет доступно:
+
 - Клиент: http://localhost:3000
 - API: http://localhost:8080
 

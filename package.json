@@ -44,5 +44,16 @@
     "*.{json,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nurseIT2/mern-social-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nurseIT2/mern-social-app/issues"
+  },
+  "homepage": "https://github.com/nurseIT2/mern-social-app#readme"
 }
