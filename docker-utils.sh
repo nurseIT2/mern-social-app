@@ -46,7 +46,7 @@ start_containers() {
   docker compose up -d
   if [ $? -eq 0 ]; then
     print_success "Контейнеры успешно запущены"
-    print_message "Клиент: http://localhost:3000"
+    print_message "Клиент: http://localhost:3001"
     print_message "API: http://localhost:8080"
   else
     print_error "Ошибка при запуске контейнеров"

@@ -1,90 +1,41 @@
-.navigation-items {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
 .navigation-item {
-  margin: 0;
-  box-sizing: border-box;
-  display: flex;
-  height: 100%;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  padding: 0 1.5rem;
 }
 
 .navigation-item a {
-  color: #1a237e;
   text-decoration: none;
-  width: 100%;
-  box-sizing: border-box;
-  display: block;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  color: white;
+}
+
+.navigation-item.mobile {
+  font-size: 1.75rem;
+  margin: 0.5rem 0;
+}
+
+.navigation-item.mobile a {
+  color: #3b0062;
 }
 
 .navigation-item a:hover,
 .navigation-item a:active,
 .navigation-item a.active {
-  color: #0d47a1;
-  background: rgba(26, 35, 126, 0.1);
-  border-radius: 8px;
+  color: #fab83f;
+}
+
+.navigation-item:last-of-type {
+  padding-right: 0;
 }
 
 .navigation-item button {
+  font: inherit;
   background: transparent;
-  border: 2px solid #1a237e;
-  color: #1a237e;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 500;
+  border: none;
+  color: white;
   cursor: pointer;
-  transition: all 0.3s ease;
+  padding: 0;
 }
 
 .navigation-item button:hover,
 .navigation-item button:active {
-  background: #1a237e;
-  color: white;
-  box-shadow: 0 2px 4px rgba(26, 35, 126, 0.2);
-}
-
-.navigation-item.mobile {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-}
-
-.navigation-item.mobile a {
-  color: #1a237e;
-  text-decoration: none;
-  width: 100%;
-  box-sizing: border-box;
-  display: block;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(26, 35, 126, 0.1);
-}
-
-.navigation-item.mobile button {
-  width: 100%;
-  text-align: left;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-bottom: 1px solid rgba(26, 35, 126, 0.1);
-  background: transparent;
-  color: #1a237e;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.navigation-item.mobile button:hover,
-.navigation-item.mobile button:active {
-  background: rgba(26, 35, 126, 0.1);
-  color: #0d47a1;
+  color: #fab83f;
 }

@@ -9,23 +9,21 @@ const navItems = [
   { id: 'signup', text: 'Signup', link: '/signup', auth: false },
 ];
 
-const navigationItems = props => (
-  <ul className="navigation-items">
-    {navItems
-      .filter(item => item.auth === props.isAuth)
-      .map(item => (
-        <li key={item.id} className={['navigation-item', props.mobile ? 'mobile' : ''].join(' ')}>
-          <NavLink to={item.link} exact onClick={props.onChoose}>
-            {item.text}
-          </NavLink>
-        </li>
-      ))}
-    {props.isAuth && (
-      <li className="navigation-item" key="logout">
-        <button onClick={props.onLogout}>Logout</button>
+const navigationItems = props => [
+  ...navItems
+    .filter(item => item.auth === props.isAuth)
+    .map(item => (
+      <li key={item.id} className={['navigation-item', props.mobile ? 'mobile' : ''].join(' ')}>
+        <NavLink to={item.link} exact onClick={props.onChoose}>
+          {item.text}
+        </NavLink>
       </li>
-    )}
-  </ul>
-);
+    )),
+  props.isAuth && (
+    <li className="navigation-item" key="logout">
+      <button onClick={props.onLogout}>Logout</button>
+    </li>
+  ),
+];
 
 export default navigationItems;

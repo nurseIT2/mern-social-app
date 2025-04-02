@@ -37,5 +37,4 @@ logs
 .idea/
 .vscode/
 *.swp
-*.swonode_modules/
-.env
+*.swo

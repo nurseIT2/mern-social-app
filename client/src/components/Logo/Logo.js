@@ -2,11 +2,6 @@ import React from 'react';
 
 import './Logo.css';
 
-const logo = props => (
-  <h1 className="logo">
-    <span className="logo__icon">🌐</span>
-    <span className="logo__text">SocialApp</span>
-  </h1>
-);
+const logo = props => <h1 className="logo">Social Network</h1>;
 
 export default logo;

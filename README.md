@@ -220,4 +220,3 @@ chmod +x docker-utils.sh
 ```
 
 Подробное руководство по использованию Docker находится в файле [DOCKER_GUIDE.md](DOCKER_GUIDE.md).
-# mern-social-app

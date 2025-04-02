@@ -16,31 +16,13 @@ class Feed extends Component {
     posts: [],
     totalPosts: 0,
     editPost: null,
-    status: '',
+    searchQuery: '',
     postPage: 1,
     postsLoading: true,
     editLoading: false,
-    searchQuery: '',
-    sortBy: 'newest',
   };
 
   componentDidMount() {
-    fetch('http://localhost:8080/auth/status', {
-      headers: {
-        Authorization: 'Bearer ' + this.props.token,
-      },
-    })
-      .then(res => {
-        if (res.status !== 200) {
-          throw new Error('Failed to fetch user status.');
-        }
-        return res.json();
-      })
-      .then(resData => {
-        this.setState({ status: resData.status });
-      })
-      .catch(this.catchError);
-
     this.loadPosts();
     const socket = openSocket('http://localhost:8080');
     socket.on('posts', data => {
@@ -91,12 +73,18 @@ class Feed extends Component {
 
   loadPosts = direction => {
     if (direction) {
-      this.setState(prevState => {
-        const newPage = direction === 'next' ? prevState.postPage + 1 : prevState.postPage - 1;
-        return { postPage: newPage, postsLoading: true };
-      });
+      this.setState({ postsLoading: true, posts: [] });
     }
-    fetch('http://localhost:8080/feed/posts?page=' + this.state.postPage, {
+    let page = this.state.postPage;
+    if (direction === 'next') {
+      page++;
+      this.setState({ postPage: page });
+    }
+    if (direction === 'previous') {
+      page--;
+      this.setState({ postPage: page });
+    }
+    fetch('http://localhost:8080/feed/posts?page=' + page, {
       headers: {
         Authorization: 'Bearer ' + this.props.token,
       },
@@ -111,13 +99,45 @@ class Feed extends Component {
         this.setState({
           posts: resData.posts.map(post => ({
             ...post,
-            imagePath: post.imageUrl ? 'http://localhost:8080/' + post.imageUrl : null,
+            imagePath: 'http://localhost:8080/' + post.imageUrl,
           })),
           totalPosts: resData.totalItems,
           postsLoading: false,
         });
       })
       .catch(this.catchError);
+  };
+
+  searchPosts = event => {
+    event.preventDefault();
+    this.setState({ postsLoading: true, posts: [] });
+    fetch('http://localhost:8080/feed/posts?page=1&search=' + this.state.searchQuery, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token,
+      },
+    })
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error('Failed to fetch posts.');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        this.setState({
+          posts: resData.posts.map(post => ({
+            ...post,
+            imagePath: 'http://localhost:8080/' + post.imageUrl,
+          })),
+          totalPosts: resData.totalItems,
+          postsLoading: false,
+          postPage: 1,
+        });
+      })
+      .catch(this.catchError);
+  };
+
+  searchInputChangeHandler = (input, value) => {
+    this.setState({ searchQuery: value });
   };
 
   statusUpdateHandler = event => {
@@ -186,8 +206,11 @@ class Feed extends Component {
       },
     })
       .then(res => {
+        if (res.status === 403) {
+          throw new Error('У вас нет прав для редактирования этого поста');
+        }
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Creating or editing a post failed!');
+          throw new Error('Ошибка при создании или редактировании поста!');
         }
         return res.json();
       })
@@ -198,6 +221,7 @@ class Feed extends Component {
           content: resData.post.content,
           creator: resData.post.creator,
           createdAt: resData.post.createdAt,
+          imageUrl: resData.post.imageUrl,
           imagePath: 'http://localhost:8080/' + resData.post.imageUrl,
         };
         this.setState(prevState => ({
@@ -253,72 +277,6 @@ class Feed extends Component {
     this.setState({ error: error });
   };
 
-  searchHandler = event => {
-    this.setState({ searchQuery: event.target.value });
-  };
-
-  sortHandler = event => {
-    this.setState({ sortBy: event.target.value });
-  };
-
-  filterAndSortPosts = () => {
-    let filteredPosts = [...this.state.posts];
-    if (this.state.searchQuery) {
-      const query = this.state.searchQuery.toLowerCase();
-      filteredPosts = filteredPosts.filter(
-        post =>
-          post.title.toLowerCase().includes(query) || post.content.toLowerCase().includes(query)
-      );
-    }
-    switch (this.state.sortBy) {
-      case 'oldest':
-        filteredPosts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-        break;
-      case 'popular':
-        filteredPosts.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-        break;
-      default: // newest
-        filteredPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    }
-    return filteredPosts;
-  };
-
-  renderPosts() {
-    const filteredPosts = this.filterAndSortPosts();
-    if (this.state.postsLoading) {
-      return (
-        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-          <Loader />
-        </div>
-      );
-    }
-    if (filteredPosts.length === 0) {
-      return <p style={{ textAlign: 'center' }}>Посты не найдены</p>;
-    }
-    return (
-      <Paginator
-        onPrevious={this.loadPosts.bind(this, 'previous')}
-        onNext={this.loadPosts.bind(this, 'next')}
-        lastPage={Math.ceil(this.state.totalPosts / 3)}
-        currentPage={this.state.postPage}
-      >
-        {filteredPosts.map(post => (
-          <Post
-            key={post._id}
-            id={post._id}
-            author={post.creator.name}
-            date={new Date(post.createdAt).toLocaleDateString('ru-RU')}
-            title={post.title}
-            image={post.imagePath}
-            content={post.content}
-            onStartEdit={this.startEditPostHandler.bind(this, post._id)}
-            onDelete={this.deletePostHandler.bind(this, post._id)}
-          />
-        ))}
-      </Paginator>
-    );
-  }
-
   render() {
     return (
       <Fragment>
@@ -330,30 +288,57 @@ class Feed extends Component {
           onCancelEdit={this.cancelEditHandler}
           onFinishEdit={this.finishEditHandler}
         />
-        <section className="feed__controls">
-          <div className="feed__search">
-            <input
+        <section className="feed__search">
+          <form onSubmit={this.searchPosts}>
+            <Input
               type="text"
-              placeholder="Поиск постов..."
+              placeholder="Поиск по постам..."
+              control="input"
+              onChange={this.searchInputChangeHandler}
               value={this.state.searchQuery}
-              onChange={this.searchHandler}
-              className="feed__search-input"
             />
-            <select
-              value={this.state.sortBy}
-              onChange={this.sortHandler}
-              className="feed__sort-select"
-            >
-              <option value="newest">Сначала новые</option>
-              <option value="oldest">Сначала старые</option>
-              <option value="popular">Популярные</option>
-            </select>
-          </div>
+            <Button mode="flat" type="submit">
+              Поиск
+            </Button>
+          </form>
+        </section>
+        <section className="feed__control">
           <Button mode="raised" design="accent" onClick={this.newPostHandler}>
             Новый пост
           </Button>
         </section>
-        <section className="feed">{this.renderPosts()}</section>
+        <section className="feed">
+          {this.state.postsLoading && (
+            <div className="feed__loading">
+              <Loader />
+            </div>
+          )}
+          {this.state.posts.length <= 0 && !this.state.postsLoading ? (
+            <p className="feed__no-posts">Постов пока нет. Создайте первый пост!</p>
+          ) : null}
+          {!this.state.postsLoading && (
+            <Paginator
+              onPrevious={this.loadPosts.bind(this, 'previous')}
+              onNext={this.loadPosts.bind(this, 'next')}
+              lastPage={Math.ceil(this.state.totalPosts / 3)}
+              currentPage={this.state.postPage}
+            >
+              {this.state.posts.map(post => (
+                <Post
+                  key={post._id}
+                  id={post._id}
+                  author={post.creator.name}
+                  date={new Date(post.createdAt).toLocaleDateString('ru-RU')}
+                  title={post.title}
+                  image={post.imagePath}
+                  content={post.content}
+                  onStartEdit={this.startEditPostHandler.bind(this, post._id)}
+                  onDelete={this.deletePostHandler.bind(this, post._id)}
+                />
+              ))}
+            </Paginator>
+          )}
+        </section>
       </Fragment>
     );
   }

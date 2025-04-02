@@ -1,22 +1,15 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from '../../context/ThemeContext';
-
+import React from 'react';
+import { useTheme } from '../../context/ThemeContext';
 import './ThemeToggle.css';
 
 const ThemeToggle = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
-  
+  const { isDark, toggleTheme } = useTheme();
+
   return (
-    <div className="theme-toggle">
-      <button 
-        className={`theme-toggle__button ${theme === 'dark' ? 'theme-toggle__button--active' : ''}`} 
-        onClick={toggleTheme}
-        title={theme === 'light' ? 'Переключить на темную тему' : 'Переключить на светлую тему'}
-      >
-        {theme === 'light' ? '🌙' : '☀️'}
-      </button>
-    </div>
+    <button className="theme-toggle" onClick={toggleTheme}>
+      {isDark ? '☀️' : '🌙'}
+    </button>
   );
 };
 
-export default ThemeToggle; 
+export default ThemeToggle;
